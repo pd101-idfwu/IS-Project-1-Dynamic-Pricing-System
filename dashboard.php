@@ -49,67 +49,7 @@
 
 </div>
 
-<script>
-function calculatePrice() {
-  let base = parseFloat(document.getElementById('basePrice').value) || 0;
-  let demand = parseFloat(document.getElementById('demand').value) || 0;
-  let competitor = parseFloat(document.getElementById('competitor').value) || 0;
-  let stock = parseFloat(document.getElementById('stock').value) || 0;
 
-  let price = base;
-  let reasons = [];
-
-  if (demand > 70) {
-    price *= 1.2;
-    reasons.push("High demand increased price");
-  }
-
-  if (demand < 30) {
-    price *= 0.85;
-    reasons.push("Low demand decreased price");
-  }
-
-  if (competitor > 0 && price > competitor) {
-    price = competitor - 1;
-    reasons.push("Adjusted to stay competitive");
-  }
-
-  if (stock < 10) {
-    price *= 1.1;
-    reasons.push("Low stock increased price");
-  }
-
-  document.getElementById('result').innerText = "$" + price.toFixed(2);
-
-  let reasonList = document.getElementById('reason');
-  reasonList.innerHTML = "";
-  reasons.forEach(r => {
-    let li = document.createElement('li');
-    li.innerText = r;
-    reasonList.appendChild(li);
-  });
-
-  updateChart(demand, price);
-}
-
-let chart;
-function updateChart(demand, price) {
-  let ctx = document.getElementById('chart').getContext('2d');
-
-  if (chart) chart.destroy();
-
-  chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Low', 'Medium', 'High'],
-      datasets: [{
-        label: 'Price Trend',
-        data: [price * 0.8, price, price * 1.2]
-      }]
-    }
-  });
-}
-</script>
 
 </body>
 </html>
